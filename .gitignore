@@ -1,1 +1,7 @@
+# Local generated db
+*.sqlite3
+
+# Others
 env/
+__pycache__/
+*.pyc
