@@ -1,11 +1,11 @@
-import {Navigate, Route} from 'react-router-dom';
-import {jwtDecode} from 'jwt-decode';
+import { Navigate, Route } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 import api from '../api';
-import {ACCESS_TOKEN, REFRESH_TOKEN} from '../constants';
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants';
 import { useState, useEffect } from 'react';
 
 
-function ProtectedRoute({children}){
+function ProtectedRoute({ children }) {
     const [isAuthorized, setIsAuthorized] = useState(null);
 
     useEffect(() => {
@@ -14,7 +14,7 @@ function ProtectedRoute({children}){
 
     const refreshToken = async () => {
         const refreshToken = localStorage.getItem(REFRESH_TOKEN);
-        if (!refreshToken){
+        if (!refreshToken) {
             setIsAuthorized(false);
             return;
         }
@@ -23,14 +23,14 @@ function ProtectedRoute({children}){
             const response = await api.post('/api/token/refresh/', {
                 refresh: refreshToken,
             });
-            if (response.status !== 200){
+            if (response.status !== 200) {
                 localStorage.setItem(ACCESS_TOKEN, response.data.access);
                 setIsAuthorized(true);
             }
-            else{
+            else {
                 setIsAuthorized(false);
             }
-        } catch (error){
+        } catch (error) {
             console.error(error);
             setIsAuthorized(false);
         }
@@ -38,7 +38,7 @@ function ProtectedRoute({children}){
 
     const auth = async () => {
         const token = localStorage.getItem(ACCESS_TOKEN);
-        if (!token){
+        if (!token) {
             setIsAuthorized(false);
             return;
         }
@@ -47,19 +47,19 @@ function ProtectedRoute({children}){
             const tokenDecoded = jwtDecode(token);
             const tokenDecodedExpiration = tokenDecoded.exp;
             const now = Date.now() / 1000;
-            if (tokenDecodedExpiration < now){
+            if (tokenDecodedExpiration < now) {
                 await refreshToken();
             }
-            else{
+            else {
                 setIsAuthorized(true);
             }
-        } catch (error){
+        } catch (error) {
             console.error(error);
             setIsAuthorized(false);
-        }        
+        }
     };
 
-    if (isAuthorized === null){
+    if (isAuthorized === null) {
         return <div>Loading...</div>
     }
 
