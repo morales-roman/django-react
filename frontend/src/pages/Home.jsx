@@ -39,8 +39,11 @@ function Home() {
     api
       .post("/api/notes/", { content, title })
       .then((res) => {
-        if (res.status === 201) alert("Note created!");
-        else alert("Failed to make note.");
+        if (res.status !== 201) alert("Failed to make note.");
+        else{
+          setContent("");
+          setTitle("");
+        }
         getNotes();
       })
       .catch((err) => alert(err));
@@ -48,12 +51,6 @@ function Home() {
 
   return (
     <div>
-      <div>
-        <h2>Notes</h2>
-        {notes.map((note) => (
-          <Note note={note} onDelete={deleteNote} key={note.id} />
-        ))}
-      </div>
       <h2>Create a Note</h2>
       <form onSubmit={createNote}>
         <label htmlFor="title">Title:</label>
@@ -78,6 +75,12 @@ function Home() {
         <br />
         <input type="submit" value="Submit"></input>
       </form>
+      <div>
+        <h2>Saved Notes</h2>
+        {notes.map((note) => (
+          <Note note={note} onDelete={deleteNote} key={note.id} />
+        ))}
+      </div>
     </div>
   );
 }
