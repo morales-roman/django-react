@@ -28,6 +28,10 @@ The main files and directories are:
 - `api/`: Contains the Django app for the API.
 - `requirements.txt`: Contains the list of pip dependencies for the backend.
 
+#### Authentication
+
+This application uses JSON Web Tokens (JWT) for authentication. The JWTs are generated in the backend and sent to the frontend, where they are stored and sent with each request to authenticate the user.
+
 ## Getting Started
 
 To get started with this project, follow these steps:
@@ -54,3 +58,12 @@ pip install -r requirements.txt
 python manage.py runserver
 ```
 
+## Testing
+
+This project includes unit tests to ensure the functionality of the backend application. The tests are located in the `tests.py` file inside of the `backend/api/` directory.
+
+To run the tests, use the following command in the `backend/` directory:
+
+```sh
+python manage.py test api
+```
