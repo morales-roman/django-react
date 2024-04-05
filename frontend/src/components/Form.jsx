@@ -1,13 +1,13 @@
 import { useState } from 'react';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants';
-import api from '../api';
 import '../styles/Form.css';
 
 function Form({ route, method }) {
-    const [username, setUsername] = userState('');
-    const [password, setPassword] = userState('');
-    const [loading, setLoading] = userState(false);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const name = method === "login" ? "Login" : "Register";
@@ -30,6 +30,7 @@ function Form({ route, method }) {
             console.error(error);
         }
         finally {
+            console.log(route);
             setLoading(false);
         }
     }
