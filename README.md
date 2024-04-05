@@ -1,4 +1,4 @@
-# Full Stack Notes Application
+# Full Stack Notes Application with JWT Authentication
 
 This is a full stack application for creating and managing notes. The frontend is built with React and the backend is built with Django.
 
